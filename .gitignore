@@ -1,3 +1,8 @@
+# Custom
+.idea/
+lib/
+.npmrc
+
 # Logs
 logs
 *.log
