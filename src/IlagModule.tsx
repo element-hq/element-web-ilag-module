@@ -21,10 +21,20 @@ import {
     RoomPreviewListener,
     RoomViewLifecycle,
 } from "@matrix-org/react-sdk-module-api/lib/lifecycles/RoomViewLifecycle";
+import { AskNameDialog, AccountModel } from "./components/AskNameDialog";
+import React from "react";
+import { DialogProps } from "@matrix-org/react-sdk-module-api/lib/components/DialogContent";
 
 export default class IlagModule extends RuntimeModule {
     public constructor(moduleApi: ModuleApi) {
         super(moduleApi);
+
+        this.moduleApi.registerTranslations({
+            "Creating your account...": {en: "Creating your account..."},
+            "First name": {en: "First name"},
+            "Last name": {en: "Last name"},
+            "Welcome! Enter your name to join": {en: "Welcome! Enter your name to join"},
+        });
 
         this.on(RoomViewLifecycle.PreviewRoomNotLoggedIn, this.onRoomPreviewBar);
         this.on(RoomViewLifecycle.JoinFromRoomPreview, this.onTryJoin);
@@ -35,6 +45,14 @@ export default class IlagModule extends RuntimeModule {
     };
 
     protected onTryJoin: JoinFromPreviewListener = (roomId) => {
-        console.log("@@ WE DID A THING");
+        this.moduleApi.openDialog<AccountModel, DialogProps, AskNameDialog>(
+            this.t("Welcome! Enter your name to join"),
+            (props, ref) => <AskNameDialog ref={ref} {...props} />,
+        ).then(async ({ didSubmit, model }) => {
+            if (!didSubmit) return;
+
+            await this.moduleApi.useAccount(model.creds);
+            await this.moduleApi.switchToRoom(roomId, true);
+        });
     };
 }
