@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import React from "react";
 import { RuntimeModule } from "@matrix-org/react-sdk-module-api/lib/RuntimeModule";
 import { ModuleApi } from "@matrix-org/react-sdk-module-api/lib/ModuleApi";
 import {
@@ -21,9 +22,9 @@ import {
     RoomPreviewListener,
     RoomViewLifecycle,
 } from "@matrix-org/react-sdk-module-api/lib/lifecycles/RoomViewLifecycle";
-import { AskNameDialog, AccountModel } from "./components/AskNameDialog";
-import React from "react";
 import { DialogProps } from "@matrix-org/react-sdk-module-api/lib/components/DialogContent";
+
+import { AskNameDialog, AccountModel } from "./components/AskNameDialog";
 
 export default class IlagModule extends RuntimeModule {
     public constructor(moduleApi: ModuleApi) {
