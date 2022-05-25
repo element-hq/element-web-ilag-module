@@ -48,11 +48,11 @@ export default class IlagModule extends RuntimeModule {
         this.moduleApi.openDialog<AccountModel, DialogProps, AskNameDialog>(
             this.t("Welcome! Enter your name to join"),
             (props, ref) => <AskNameDialog ref={ref} {...props} />,
-        ).then(async ({ didSubmit, model }) => {
-            if (!didSubmit) return;
+        ).then(async ({ didOkOrSubmit, model }) => {
+            if (!didOkOrSubmit) return;
 
-            await this.moduleApi.useAccount(model.creds);
-            await this.moduleApi.switchToRoom(roomId, true);
+            await this.moduleApi.overwriteAccountAuth(model.creds);
+            await this.moduleApi.navigatePermalink(`https://matrix.to/#/${roomId}`, true);
         });
     };
 }

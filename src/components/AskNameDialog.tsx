@@ -19,7 +19,7 @@ import { DialogProps, DialogState } from "@matrix-org/react-sdk-module-api/lib/c
 import { DialogContent } from "@matrix-org/react-sdk-module-api/lib/components/DialogContent";
 import { TextInputField } from "@matrix-org/react-sdk-module-api/lib/components/TextInputField";
 import { Spinner } from "@matrix-org/react-sdk-module-api/lib/components/Spinner";
-import { AccountCredentials } from "@matrix-org/react-sdk-module-api/lib/types/credentials";
+import { AccountAuthInfo } from "@matrix-org/react-sdk-module-api/src/types/AccountAuthInfo";
 
 interface Props extends DialogProps {
     // we don't need anything new
@@ -31,7 +31,7 @@ interface State extends DialogState {
 }
 
 export interface AccountModel {
-    creds: AccountCredentials;
+    creds: AccountAuthInfo;
 }
 
 export class AskNameDialog extends DialogContent<Props, State, AccountModel> {
@@ -40,7 +40,7 @@ export class AskNameDialog extends DialogContent<Props, State, AccountModel> {
         // TODO: @@ Proper ID generation using a config setting
         const localpart = `${this.state.firstName}_${this.state.lastName}`.toLowerCase().replace(/[^0-9a-z]/g, '');
         // TODO: @@ Proper password generation/usage
-        const creds = await this.props.moduleApi.registerAccount(localpart, localpart, `${this.state.firstName} ${this.state.lastName}`);
+        const creds = await this.props.moduleApi.registerSimpleAccount(localpart, localpart, `${this.state.firstName} ${this.state.lastName}`);
         return { creds };
     }
 
