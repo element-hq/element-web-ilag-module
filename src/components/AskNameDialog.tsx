@@ -19,7 +19,9 @@ import { DialogProps, DialogState } from "@matrix-org/react-sdk-module-api/lib/c
 import { DialogContent } from "@matrix-org/react-sdk-module-api/lib/components/DialogContent";
 import { TextInputField } from "@matrix-org/react-sdk-module-api/lib/components/TextInputField";
 import { Spinner } from "@matrix-org/react-sdk-module-api/lib/components/Spinner";
-import { AccountAuthInfo } from "@matrix-org/react-sdk-module-api/src/types/AccountAuthInfo";
+import { AccountAuthInfo } from "@matrix-org/react-sdk-module-api/lib/types/AccountAuthInfo";
+
+import { fillLocalpart, fillPassword, TemplateVars } from "../templates";
 
 interface Props extends DialogProps {
     // we don't need anything new
@@ -37,10 +39,13 @@ export interface AccountModel {
 export class AskNameDialog extends DialogContent<Props, State, AccountModel> {
     public async trySubmit(): Promise<AccountModel> {
         this.setState({ busy: true });
-        // TODO: @@ Proper ID generation using a config setting
-        const localpart = `${this.state.firstName}_${this.state.lastName}`.toLowerCase().replace(/[^0-9a-z]/g, '');
-        // TODO: @@ Proper password generation/usage
-        const creds = await this.props.moduleApi.registerSimpleAccount(localpart, localpart, `${this.state.firstName} ${this.state.lastName}`);
+        const vars: TemplateVars = {
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+        };
+        const localpart = fillLocalpart(this.props.moduleApi, vars);
+        const password = fillPassword(this.props.moduleApi, vars);
+        const creds = await this.props.moduleApi.registerSimpleAccount(localpart, localpart, password);
         return { creds };
     }
 
