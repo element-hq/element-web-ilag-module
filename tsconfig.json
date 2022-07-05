@@ -7,10 +7,12 @@
     "moduleResolution": "node",
     "noImplicitAny": true,
     "declaration": false,
-    "noEmit": true
+    "noEmit": true,
+    "jsx": "react"
   },
   "include": [
     "./src/**/*.ts",
+    "./src/**/*.tsx",
     "./test/**/*.ts"
   ]
 }

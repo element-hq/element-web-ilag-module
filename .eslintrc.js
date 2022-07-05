@@ -15,6 +15,7 @@ module.exports = {
     overrides: [{
         files: [
             "**/*.ts",
+            "**/*.tsx",
         ],
         extends: [
             "plugin:matrix-org/typescript",
