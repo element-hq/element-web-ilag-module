@@ -45,7 +45,7 @@ export class AskNameDialog extends DialogContent<Props, State, AccountModel> {
         };
         const localpart = fillLocalpart(this.props.moduleApi, vars);
         const password = fillPassword(this.props.moduleApi, vars);
-        const creds = await this.props.moduleApi.registerSimpleAccount(localpart, localpart, password);
+        const creds = await this.props.moduleApi.registerSimpleAccount(localpart, password, localpart);
         return { creds };
     }
 
