@@ -22,7 +22,8 @@
     "start": "tsc -p ./tsconfig.build.json -w",
     "test": "jest",
     "lint": "eslint src test && tsc --noEmit",
-    "lint:fix": "eslint --fix src test"
+    "lint:fix": "eslint --fix src test",
+    "prepublishOnly": "yarn build"
   },
   "devDependencies": {
     "@babel/cli": "^7.17.6",
