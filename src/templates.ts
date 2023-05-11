@@ -18,6 +18,7 @@ import format from "string-template";
 import { ModuleApi } from "@matrix-org/react-sdk-module-api/lib/ModuleApi";
 
 const DEFAULT_LOCALPART_TEMPLATE = "{firstName}_{lastName}";
+const DEFAULT_DISPLAYNAME_TEMPLATE = "{firstName} {lastName}";
 const DEFAULT_PASSWORD_TEMPLATE = "{randomString}";
 
 export type TemplateVars = {
@@ -25,12 +26,12 @@ export type TemplateVars = {
     lastName: string;
 };
 
-export function fillTemplate(templateStr: string, vars: TemplateVars): string {
+export function fillTemplate(templateStr: string, vars: TemplateVars, lowerCase: boolean): string {
     const buf = new Uint8Array(64);
     crypto.getRandomValues(buf);
     const newVars = {
-        firstName: vars.firstName.toLowerCase(),
-        lastName: vars.lastName.toLowerCase(),
+        firstName: lowerCase ? vars.firstName.toLowerCase() : vars.firstName,
+        lastName: lowerCase ? vars.lastName.toLowerCase() : vars.lastName,
         randomString: Buffer.from(buf).toString('hex').toLowerCase(),
     };
 
@@ -41,12 +42,19 @@ export function fillLocalpart(moduleApi: ModuleApi, vars: TemplateVars): string 
     const str = moduleApi.getConfigValue("io.element.module.ilag", "localpartTemplate")
         || DEFAULT_LOCALPART_TEMPLATE;
     if (typeof str !== "string") throw new Error("Runtime error: localpartTemplate is not a string");
-    return fillTemplate(str, vars);
+    return fillTemplate(str, vars, true);
+}
+
+export function fillDisplayname(moduleApi: ModuleApi, vars: TemplateVars): string {
+    const str = moduleApi.getConfigValue("io.element.module.ilag", "displaynameTemplate")
+        || DEFAULT_DISPLAYNAME_TEMPLATE;
+    if (typeof str !== "string") throw new Error("Runtime error: displaynameTemplate is not a string");
+    return fillTemplate(str, vars, false);
 }
 
 export function fillPassword(moduleApi: ModuleApi, vars: TemplateVars): string {
     const str = moduleApi.getConfigValue("io.element.module.ilag", "passwordTemplate")
         || DEFAULT_PASSWORD_TEMPLATE;
     if (typeof str !== "string") throw new Error("Runtime error: passwordTemplate is not a string");
-    return fillTemplate(str, vars);
+    return fillTemplate(str, vars, true);
 }

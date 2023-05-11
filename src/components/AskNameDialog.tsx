@@ -21,7 +21,7 @@ import { TextInputField } from "@matrix-org/react-sdk-module-api/lib/components/
 import { Spinner } from "@matrix-org/react-sdk-module-api/lib/components/Spinner";
 import { AccountAuthInfo } from "@matrix-org/react-sdk-module-api/lib/types/AccountAuthInfo";
 
-import { fillLocalpart, fillPassword, TemplateVars } from "../templates";
+import { fillDisplayname, fillLocalpart, fillPassword, TemplateVars } from "../templates";
 
 interface Props extends DialogProps {
     // we don't need anything new
@@ -45,7 +45,10 @@ export class AskNameDialog extends DialogContent<Props, State, AccountModel> {
         };
         const localpart = fillLocalpart(this.props.moduleApi, vars);
         const password = fillPassword(this.props.moduleApi, vars);
-        const creds = await this.props.moduleApi.registerSimpleAccount(localpart, password, localpart);
+        const displayName = fillDisplayname(this.props.moduleApi, vars);
+        const creds = await this.props.moduleApi.registerSimpleAccount(
+            localpart, password, displayName,
+        );
         return { creds };
     }
 
