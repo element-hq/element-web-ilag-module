@@ -35,6 +35,7 @@
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-react": "^7.16.7",
     "@babel/preset-typescript": "^7.16.7",
+    "@testing-library/react": "^12.1.5",
     "@types/jest": "^27.4.1",
     "@types/react": "^17",
     "@types/string-template": "^1.0.2",
@@ -45,13 +46,15 @@
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-matrix-org": "^0.4.0",
     "jest": "^27.5.1",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
     "rimraf": "^3.0.2",
     "ts-jest": "^27.1.4",
     "typescript": "^4.6.3"
   },
   "dependencies": {
     "@babel/runtime": "^7.17.9",
-    "@matrix-org/react-sdk-module-api": "^0.0.3",
+    "@matrix-org/react-sdk-module-api": "^0.0.5",
     "string-template": "^1.0.0"
   }
 }
