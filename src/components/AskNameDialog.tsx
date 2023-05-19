@@ -20,6 +20,7 @@ import { DialogContent } from "@matrix-org/react-sdk-module-api/lib/components/D
 import { TextInputField } from "@matrix-org/react-sdk-module-api/lib/components/TextInputField";
 import { Spinner } from "@matrix-org/react-sdk-module-api/lib/components/Spinner";
 import { AccountAuthInfo } from "@matrix-org/react-sdk-module-api/lib/types/AccountAuthInfo";
+import { ModuleApi } from "@matrix-org/react-sdk-module-api/lib/ModuleApi";
 
 import { fillDisplayname, fillLocalpart, fillPassword, TemplateVars } from "../templates";
 
@@ -36,19 +37,23 @@ export interface AccountModel {
     creds: AccountAuthInfo;
 }
 
+export async function registerAccount(moduleApi: ModuleApi, vars: TemplateVars): Promise<AccountAuthInfo> {
+    const localpart = fillLocalpart(moduleApi, vars);
+    const password = fillPassword(moduleApi, vars);
+    const displayName = fillDisplayname(moduleApi, vars);
+    return moduleApi.registerSimpleAccount(
+        localpart, password, displayName,
+    );
+}
+
 export class AskNameDialog extends DialogContent<Props, State, AccountModel> {
     public async trySubmit(): Promise<AccountModel> {
         this.setState({ busy: true });
-        const vars: TemplateVars = {
+        const creds = await registerAccount(this.props.moduleApi, {
             firstName: this.state.firstName,
             lastName: this.state.lastName,
-        };
-        const localpart = fillLocalpart(this.props.moduleApi, vars);
-        const password = fillPassword(this.props.moduleApi, vars);
-        const displayName = fillDisplayname(this.props.moduleApi, vars);
-        const creds = await this.props.moduleApi.registerSimpleAccount(
-            localpart, password, displayName,
-        );
+        });
+        this.setState({ busy: false });
         return { creds };
     }
 
