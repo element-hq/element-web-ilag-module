@@ -1,6 +1,6 @@
 {
   "name": "@vector-im/element-web-ilag-module",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Demo module for Element Web",
   "main": "lib/IlagModule.js",
   "types": "lib/IlagModule.d.ts",
