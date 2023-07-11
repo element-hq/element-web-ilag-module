@@ -1321,10 +1321,10 @@
     "@jridgewell/resolve-uri" "3.1.0"
     "@jridgewell/sourcemap-codec" "1.4.14"
 
-"@matrix-org/react-sdk-module-api@^0.0.5":
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/@matrix-org/react-sdk-module-api/-/react-sdk-module-api-0.0.5.tgz#78bd80f42b918394978965ef3e08496e97948c7a"
-  integrity sha512-QhH1T1E6Q6csCUitQzm32SRnX49Ox73TF5BZ4p5TOGFpPD3QuYc5/dDC1Yh3xUljgqOS2C6H24qaskw6olCtfQ==
+"@matrix-org/react-sdk-module-api@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@matrix-org/react-sdk-module-api/-/react-sdk-module-api-1.0.0.tgz#de73e163a439fe330f6971a6a0cef2ccb090d616"
+  integrity sha512-drhPkoPWitAv9bXS2q8cyaqPta/KGF+Ph3aZSmaYiOPyY5S84e4Ju3JI6/HExqF8+HyBsajlCKtyvTZsMsTIFA==
   dependencies:
     "@babel/runtime" "^7.17.9"
 
