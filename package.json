@@ -23,7 +23,7 @@
     "test": "jest",
     "lint": "eslint src test && tsc --noEmit",
     "lint:fix": "eslint --fix src test",
-    "prepublishOnly": "yarn build"
+    "prepare": "yarn build"
   },
   "devDependencies": {
     "@babel/cli": "^7.17.6",
